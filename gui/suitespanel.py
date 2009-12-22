@@ -15,6 +15,9 @@ class Suitespanel(wx.Panel):
 
         ## Subscriptions
         pub.subscribe(self.populatelist, 'suiteslist.populate')
+        
+        ## Bindings
+        self.Bind(wx.EVT_LISTBOX_DCLICK, self.onopensuite, id=self.suiteslist.GetId())
 
     def setup(self, sizer):
         self.suiteslist = wx.ListBox(self, wx.ID_ANY)
@@ -27,7 +30,15 @@ class Suitespanel(wx.Panel):
     ##--------------------------------------------------------------------------
     ## Subscription handlers
     ##--------------------------------------------------------------------------
-
+    
     def populatelist(self, message):
-        list = self.command.getCommandSuites()
-        self.suiteslist.InsertItems(list, 0)
+        suites = self.command.getSuites().keys()
+        self.suiteslist.InsertItems(suites, 0)
+
+    ##--------------------------------------------------------------------------
+    ## Event handlers
+    ##--------------------------------------------------------------------------
+    def onopensuite(self, event):
+        index = event.GetSelection()
+        name = self.suiteslist.GetString(index)
+        print self.command.openSuite(name)
