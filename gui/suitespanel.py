@@ -41,4 +41,5 @@ class Suitespanel(wx.Panel):
     def onopensuite(self, event):
         index = event.GetSelection()
         name = self.suiteslist.GetString(index)
-        print self.command.openSuite(name)
+        information = self.command.openSuite(name)
+        pub.sendMessage('run.commands', information)

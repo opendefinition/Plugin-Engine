@@ -6,6 +6,7 @@ class Application(wx.App):
     def OnInit(self):
         frame = Mainframe(None)
         frame.Centre()
+        frame.Maximize()
         frame.Show(True)
         self.SetTopWindow(frame)
 
